@@ -23,6 +23,8 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -33,7 +35,7 @@ import android.widget.Toast;
 public class AndroidPHPConnectionDemo extends Activity {
     Button b;
     EditText et,pass;
-    TextView tv;
+    TextView errato;
     HttpPost httppost;
     StringBuffer buffer;
     HttpResponse response;
@@ -49,7 +51,11 @@ public class AndroidPHPConnectionDemo extends Activity {
         b = (Button)findViewById(R.id.Button01);
         et = (EditText)findViewById(R.id.username);
         pass= (EditText)findViewById(R.id.password);
-        tv = (TextView)findViewById(R.id.tv);
+        errato = (TextView)findViewById(R.id.errato);
+
+        TextView textView = (TextView) findViewById(R.id.registrati);
+        textView.setText(Html.fromHtml("www.esamiuniud.altervista.org/encimg"));
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,23 +87,27 @@ public class AndroidPHPConnectionDemo extends Activity {
             // edited by James from coderzheaven.. from here....
             ResponseHandler<String> responseHandler = new BasicResponseHandler();
             final String response = httpclient.execute(httppost, responseHandler);
-            System.out.println("Response : " + response);
             runOnUiThread(new Runnable() {
                 public void run() {
-                    tv.setText("Response from PHP : " + response);
                     dialog.dismiss();
                 }
             });
 
-            if(response.equalsIgnoreCase("User Found")){
+            if(response.equalsIgnoreCase("1")){
                 runOnUiThread(new Runnable() {
                     public void run() {
+                        errato.setText("");
                         Toast.makeText(AndroidPHPConnectionDemo.this, "Login Success", Toast.LENGTH_SHORT).show();
                     }
                 });
 
                 startActivity(new Intent(AndroidPHPConnectionDemo.this, UserPage.class));
             }else{
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        errato.setText("Email o password errati!");
+                    }
+                });
                 showAlert();
             }
 

@@ -7,22 +7,7 @@
     android:padding="25dp"
     android:background="#2ecc71"
     >
-    <!--<TextView
-        android:id="@+id/tv0"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="EncImg"
-        android:textSize="20sp"
-        android:gravity="center"
-        android:textStyle="bold"
-        />
 
-    <TextView
-        android:id="@+id/tv1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Username"
-        />-->
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,6 +15,19 @@
         android:layout_gravity="center_horizontal"
         android:src="@drawable/logo"
         android:scaleType="centerInside"
+        android:layout_margin="10dp"
+        android:scaleX="0.7"
+        android:scaleY="0.7"
+        />
+
+    <TextView
+        android:id="@+id/errato"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:gravity="center"
+        android:textColor="#e74c3c"
+        android:textSize="20sp"
         />
 
     <EditText
@@ -39,16 +37,13 @@
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:hint="Email"
-        android:background="#bdc3c7"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp">
+        android:background="@drawable/angoliarr"
+        android:paddingTop="9dp"
+        android:paddingBottom="9dp"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="5dp">
     </EditText>
-    <!--<TextView
-        android:id="@+id/tv2"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Password"
-        />-->
+
     <EditText
         android:text=""
         android:id="@+id/password"
@@ -57,18 +52,26 @@
         android:singleLine="true"
         android:hint="Password"
         android:layout_marginTop="30dp"
-        android:background="#bdc3c7"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp">
+        android:background="@drawable/angoliarr"
+        android:paddingTop="9dp"
+        android:paddingBottom="9dp"
+        android:paddingLeft="10dp">
     </EditText>
+
     <Button
-        android:text="Login"
+        android:text="Accedi"
         android:id="@+id/Button01"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:background="#bdc3c7">
+        android:paddingTop="11dp"
+        android:paddingBottom="11dp"
+        android:background="@drawable/angoliarrverde"
+        android:textColor="#FFF"
+        android:textSize="20sp"
+        android:textStyle="bold">
     </Button>
+
     <TextView
         android:id="@+id/pswreminder"
         android:layout_width="fill_parent"
@@ -76,11 +79,19 @@
         android:text="Hai dimenticato la password?"
         android:layout_marginTop="7dp"
         android:gravity="center"
+        android:textColor="#FFF"
         />
+
     <TextView
-        android:id="@+id/tv"
+        android:id="@+id/registrati"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="@string/registrati"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:linksClickable="true"
+        android:autoLink="web"
+        android:textColor="#FFF"
         />
+
 </LinearLayout>
