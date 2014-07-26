@@ -2,11 +2,13 @@ package encimg.app;
 
 
 import android.app.ActionBar;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -16,6 +18,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -24,6 +27,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.InputType;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,8 +36,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AndroidPHPConnectionDemo extends Activity {
-    Button b;
+public class Home extends Activity {
+    Button accedi, registrati;
     EditText et,pass;
     TextView errato;
     HttpPost httppost;
@@ -48,19 +52,17 @@ public class AndroidPHPConnectionDemo extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        b = (Button)findViewById(R.id.Button01);
+        accedi = (Button)findViewById(R.id.Button01);
+        registrati = (Button) findViewById(R.id.Button02);
         et = (EditText)findViewById(R.id.username);
         pass= (EditText)findViewById(R.id.password);
+        pass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         errato = (TextView)findViewById(R.id.errato);
 
-        TextView textView = (TextView) findViewById(R.id.registrati);
-        textView.setText(Html.fromHtml("www.esamiuniud.altervista.org/encimg"));
-        textView.setMovementMethod(LinkMovementMethod.getInstance());
-
-        b.setOnClickListener(new View.OnClickListener() {
+        accedi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog = ProgressDialog.show(AndroidPHPConnectionDemo.this, "",
+                dialog = ProgressDialog.show(Home.this, "",
                         "Validating user...", true);
                 new Thread(new Runnable() {
                     public void run() {
@@ -69,22 +71,30 @@ public class AndroidPHPConnectionDemo extends Activity {
                 }).start();
             }
         });
+
+        registrati.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse("http://esamiuniud.altervista.org/encimg");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
     }
 
     void login(){
         try{
 
             httpclient=new DefaultHttpClient();
-            httppost= new HttpPost("http://esamiuniud.altervista.org/encimg/check.php"); // make sure the url is correct.
-            //add your data
+            httppost= new HttpPost("http://esamiuniud.altervista.org/encimg/check.php");
             nameValuePairs = new ArrayList<NameValuePair>(2);
-            // Always use the same variable name for posting i.e the android side variable name and php side variable name should be similar,
+
             nameValuePairs.add(new BasicNameValuePair("username",et.getText().toString().trim()));  // $Edittext_value = $_POST['Edittext_value'];
             nameValuePairs.add(new BasicNameValuePair("password",pass.getText().toString().trim()));
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-            //Execute HTTP Post Request
+
             response=httpclient.execute(httppost);
-            // edited by James from coderzheaven.. from here....
+
             ResponseHandler<String> responseHandler = new BasicResponseHandler();
             final String response = httpclient.execute(httppost, responseHandler);
             runOnUiThread(new Runnable() {
@@ -97,11 +107,11 @@ public class AndroidPHPConnectionDemo extends Activity {
                 runOnUiThread(new Runnable() {
                     public void run() {
                         errato.setText("");
-                        Toast.makeText(AndroidPHPConnectionDemo.this, "Login Success", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Home.this, "Login Success", Toast.LENGTH_SHORT).show();
                     }
                 });
 
-                startActivity(new Intent(AndroidPHPConnectionDemo.this, UserPage.class));
+                startActivity(new Intent(Home.this, UserPage.class));
             }else{
                 runOnUiThread(new Runnable() {
                     public void run() {
@@ -117,9 +127,9 @@ public class AndroidPHPConnectionDemo extends Activity {
         }
     }
     public void showAlert(){
-        AndroidPHPConnectionDemo.this.runOnUiThread(new Runnable() {
+        Home.this.runOnUiThread(new Runnable() {
             public void run() {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AndroidPHPConnectionDemo.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(Home.this);
                 builder.setTitle("Login Error.");
                 builder.setMessage("User not Found.")
                         .setCancelable(false)

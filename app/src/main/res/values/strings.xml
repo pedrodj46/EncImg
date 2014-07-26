@@ -3,6 +3,6 @@
 
     <string name="app_name">EncImg</string>
     <string name="action_settings">Settings</string>
-    <string name="registrati"><a href='http://esamiuniud.altervista.org/encimg'>Registrati su EncImg</a></string>
+    <!--<string name="registrati"><a href="http://esamiuniud.altervista.org/encimg">Registrati su EncImg</a></string>-->
 
 </resources>

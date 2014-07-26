@@ -58,20 +58,6 @@
         android:paddingLeft="10dp">
     </EditText>
 
-    <Button
-        android:text="Accedi"
-        android:id="@+id/Button01"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:paddingTop="11dp"
-        android:paddingBottom="11dp"
-        android:background="@drawable/angoliarrverde"
-        android:textColor="#FFF"
-        android:textSize="20sp"
-        android:textStyle="bold">
-    </Button>
-
     <TextView
         android:id="@+id/pswreminder"
         android:layout_width="fill_parent"
@@ -82,16 +68,44 @@
         android:textColor="#FFF"
         />
 
-    <TextView
+    <Button
+        android:text="Accedi"
+        android:id="@+id/Button01"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingTop="11dp"
+        android:paddingBottom="11dp"
+        android:background="@drawable/angoliarrverde"
+        android:textColor="#FFF"
+        android:textSize="20sp"
+        android:textStyle="bold">
+    </Button>
+
+    <!--<TextView
         android:id="@+id/registrati"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/registrati"
-        android:layout_marginTop="50dp"
+        android:text=""
+        android:layout_marginTop="30dp"
         android:gravity="center"
-        android:linksClickable="true"
         android:autoLink="web"
         android:textColor="#FFF"
-        />
+        android:clickable="true"
+        />-->
+
+    <Button
+        android:text="Registrati"
+        android:id="@+id/Button02"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingTop="11dp"
+        android:paddingBottom="11dp"
+        android:background="@drawable/angoliarrverde"
+        android:textColor="#FFF"
+        android:textSize="20sp"
+        android:textStyle="bold">
+    </Button>
 
 </LinearLayout>
