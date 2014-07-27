@@ -63,7 +63,7 @@ public class Home extends Activity {
             @Override
             public void onClick(View v) {
                 dialog = ProgressDialog.show(Home.this, "",
-                        "Validating user...", true);
+                        "Accesso in corso...", true);
                 new Thread(new Runnable() {
                     public void run() {
                         login();
@@ -107,7 +107,7 @@ public class Home extends Activity {
                 runOnUiThread(new Runnable() {
                     public void run() {
                         errato.setText("");
-                        Toast.makeText(Home.this, "Login Success", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Home.this, "Accesso effettuato", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -118,28 +118,11 @@ public class Home extends Activity {
                         errato.setText("Email o password errati!");
                     }
                 });
-                showAlert();
             }
 
         }catch(Exception e){
             dialog.dismiss();
             System.out.println("Exception : " + e.getMessage());
         }
-    }
-    public void showAlert(){
-        Home.this.runOnUiThread(new Runnable() {
-            public void run() {
-                AlertDialog.Builder builder = new AlertDialog.Builder(Home.this);
-                builder.setTitle("Login Error.");
-                builder.setMessage("User not Found.")
-                        .setCancelable(false)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                            }
-                        });
-                AlertDialog alert = builder.create();
-                alert.show();
-            }
-        });
     }
 }
