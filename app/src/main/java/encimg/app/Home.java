@@ -2,6 +2,7 @@ package encimg.app;
 
 
 import android.app.ActionBar;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 
@@ -39,13 +40,15 @@ import android.widget.Toast;
 public class Home extends Activity {
     Button accedi, registrati;
     EditText et,pass;
-    TextView errato;
+    TextView errato, dimenticato;
     HttpPost httppost;
     StringBuffer buffer;
     HttpResponse response;
     HttpClient httpclient;
     List<NameValuePair> nameValuePairs;
-    ProgressDialog dialog = null;
+    //ProgressDialog dialog = null;
+    ProgressDialog dialog;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,12 +61,23 @@ public class Home extends Activity {
         pass= (EditText)findViewById(R.id.password);
         pass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         errato = (TextView)findViewById(R.id.errato);
+        dimenticato = (TextView)findViewById(R.id.pswreminder);
+
+        //link home password dimenticata
+        dimenticato.setText(Html.fromHtml("<a href=\"http://esamiuniud.altervista.org/pass-dimenticata.php\">Hai dimenticato la password?</a>"));
+        dimenticato.setMovementMethod(LinkMovementMethod.getInstance());
+        dimenticato.setTextColor(Color.parseColor("#FFFFFF"));
 
         accedi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog = ProgressDialog.show(Home.this, "",
-                        "Accesso in corso...", true);
+                //dialog = ProgressDialog.show(Home.this, "", "Accesso in corso...", true);
+                dialog = new ProgressDialog(Home.this);
+                dialog.setTitle("");
+                dialog.setMessage("Accesso in corso...");
+                dialog.setProgressStyle(dialog.STYLE_SPINNER);
+                dialog.show();
+
                 new Thread(new Runnable() {
                     public void run() {
                         login();
@@ -107,7 +121,7 @@ public class Home extends Activity {
                 runOnUiThread(new Runnable() {
                     public void run() {
                         errato.setText("");
-                        Toast.makeText(Home.this, "Accesso effettuato", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Home.this, "Accesso effettuato", Toast.LENGTH_LONG).show();
                     }
                 });
 

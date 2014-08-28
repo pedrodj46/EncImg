@@ -62,7 +62,7 @@
         android:id="@+id/pswreminder"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Hai dimenticato la password?"
+        android:text=""
         android:layout_marginTop="7dp"
         android:gravity="center"
         android:textColor="#FFF"
