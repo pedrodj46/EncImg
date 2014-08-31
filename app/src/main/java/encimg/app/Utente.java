@@ -4,12 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
-import android.widget.TextView;
+import android.widget.Toast;
 
 public class Utente extends ActionBarActivity {
+
+    String idcompleto;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -18,9 +17,10 @@ public class Utente extends ActionBarActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
     }
 
+    final VariabiliGlobali idUtente = (VariabiliGlobali) getApplicationContext();
+    final String id=idUtente.getId();
 
     /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {

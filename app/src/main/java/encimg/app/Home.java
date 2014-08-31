@@ -6,9 +6,11 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -19,7 +21,9 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -44,10 +48,12 @@ public class Home extends Activity {
     HttpPost httppost;
     StringBuffer buffer;
     HttpResponse response;
+    HttpEntity entity;
     HttpClient httpclient;
     List<NameValuePair> nameValuePairs;
-    //ProgressDialog dialog = null;
     ProgressDialog dialog;
+    String id;
+
 
 
     @Override
@@ -66,7 +72,6 @@ public class Home extends Activity {
         //link home password dimenticata
         dimenticato.setText(Html.fromHtml("<a href=\"http://esamiuniud.altervista.org/pass-dimenticata.php\">Hai dimenticato la password?</a>"));
         dimenticato.setMovementMethod(LinkMovementMethod.getInstance());
-        dimenticato.setTextColor(Color.parseColor("#FFFFFF"));
 
         accedi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,8 +111,9 @@ public class Home extends Activity {
             nameValuePairs.add(new BasicNameValuePair("username",et.getText().toString().trim()));  // $Edittext_value = $_POST['Edittext_value'];
             nameValuePairs.add(new BasicNameValuePair("password",pass.getText().toString().trim()));
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
             response=httpclient.execute(httppost);
+            entity=response.getEntity();
+            id=EntityUtils.toString(entity, HTTP.UTF_8);
 
             ResponseHandler<String> responseHandler = new BasicResponseHandler();
             final String response = httpclient.execute(httppost, responseHandler);
@@ -117,7 +123,14 @@ public class Home extends Activity {
                 }
             });
 
-            if(response.equalsIgnoreCase("1")){
+            if(response.equalsIgnoreCase("0")){
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        errato.setText("Email o password errati!");
+                    }
+                });
+            }
+            else{
                 runOnUiThread(new Runnable() {
                     public void run() {
                         errato.setText("");
@@ -125,16 +138,14 @@ public class Home extends Activity {
                     }
                 });
 
+                //((VariabiliGlobali) this.getApplication()).settaVariabile(id);
+                final VariabiliGlobali idUtente = (VariabiliGlobali) getApplicationContext();
+                idUtente.setId(id);
                 startActivity(new Intent(Home.this, UserPage.class));
-            }else{
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        errato.setText("Email o password errati!");
-                    }
-                });
             }
 
-        }catch(Exception e){
+        }
+        catch(Exception e){
             dialog.dismiss();
             System.out.println("Exception : " + e.getMessage());
         }
