@@ -1,3 +1,10 @@
+/* Questa Activity permette di scegliere la maniera di acquisizione delle immagini. L'utente potrà
+ * scegliere se selezionare un'immagine dalla sua galleria, oppure accedere alla fotocamera per
+ * farne una nuova. Se nel manifest l'attributo android:required di
+ * <uses-feature android:name="android.hardware.camera"/> è settato a false bisogna usare la guardia
+ * hasSystemFeature(PackageManager.FEATURE_CAMERA) per assicurarsi che il dispositivo abbia una
+ * fotocamera. */
+
 package encimg.app;
 
 import android.content.Intent;

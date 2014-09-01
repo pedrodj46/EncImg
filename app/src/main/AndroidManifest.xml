@@ -11,6 +11,12 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA"></uses-permission>
 
+    <!-- Con l'attributo android:required a false la app può essere installata anche su dispositivi
+     senza fotocamera. Per evitare che la app tenti di accedere a questa feature se non è presente
+     bisogna usare nel codice la guardia hasSystemFeature(PackageManager.FEATURE_CAMERA) se
+     restituisce false si disabilitano le funzioni di accesso alla fotocamera -->
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+
     <application
         android:name="VariabiliGlobali"
         android:allowBackup="true"
