@@ -1,17 +1,12 @@
 package encimg.app;
 
 
-import android.app.ActionBar;
-import android.graphics.Color;
 import android.net.Uri;
-import android.support.v7.app.ActionBarActivity;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -23,19 +18,15 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.InputType;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -54,8 +45,6 @@ public class Home extends Activity {
     ProgressDialog dialog;
     String id;
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +59,7 @@ public class Home extends Activity {
         dimenticato = (TextView)findViewById(R.id.pswreminder);
 
         //link home password dimenticata
-        dimenticato.setText(Html.fromHtml("<a href=\"http://esamiuniud.altervista.org/pass-dimenticata.php\">Hai dimenticato la password?</a>"));
+        dimenticato.setText(Html.fromHtml("<a href=\"" + VariabiliGlobali.getPasswordServerUrl() + "\">Hai dimenticato la password?</a>"));
         dimenticato.setMovementMethod(LinkMovementMethod.getInstance());
 
         accedi.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +68,7 @@ public class Home extends Activity {
                 //dialog = ProgressDialog.show(Home.this, "", "Accesso in corso...", true);
                 dialog = new ProgressDialog(Home.this);
                 dialog.setTitle("");
-                dialog.setMessage("Accesso in corso...");
+                dialog.setMessage(getString(R.string.home_loading));
                 dialog.setProgressStyle(dialog.STYLE_SPINNER);
                 dialog.show();
 
@@ -94,7 +83,7 @@ public class Home extends Activity {
         registrati.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri uri = Uri.parse("http://esamiuniud.altervista.org/encimg");
+                Uri uri = Uri.parse(VariabiliGlobali.getHomeServerUrl());
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
             }
@@ -104,16 +93,16 @@ public class Home extends Activity {
     void login(){
         try{
 
-            httpclient=new DefaultHttpClient();
-            httppost= new HttpPost("http://esamiuniud.altervista.org/encimg/check.php");
+            httpclient = new DefaultHttpClient();
+            httppost = new HttpPost("http://esamiuniud.altervista.org/encimg/check.php");
             nameValuePairs = new ArrayList<NameValuePair>(2);
 
-            nameValuePairs.add(new BasicNameValuePair("username",et.getText().toString().trim()));  // $Edittext_value = $_POST['Edittext_value'];
-            nameValuePairs.add(new BasicNameValuePair("password",pass.getText().toString().trim()));
+            nameValuePairs.add(new BasicNameValuePair("username", et.getText().toString().trim()));  // $Edittext_value = $_POST['Edittext_value'];
+            nameValuePairs.add(new BasicNameValuePair("password", pass.getText().toString().trim()));
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-            response=httpclient.execute(httppost);
-            entity=response.getEntity();
-            id=EntityUtils.toString(entity, HTTP.UTF_8);
+            response = httpclient.execute(httppost);
+            entity = response.getEntity();
+            id = EntityUtils.toString(entity, HTTP.UTF_8);
 
             ResponseHandler<String> responseHandler = new BasicResponseHandler();
             final String response = httpclient.execute(httppost, responseHandler);
@@ -143,7 +132,6 @@ public class Home extends Activity {
                 idUtente.setId(id);
                 startActivity(new Intent(Home.this, UserPage.class));
             }
-
         }
         catch(Exception e){
             dialog.dismiss();

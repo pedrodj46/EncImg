@@ -8,5 +8,16 @@
     <string name="visualizza">Visualizza immagini criptate</string>
     <string name="fotocamera">Scatta una nuova foto</string>
     <string name="galleria">Seleziona foto dalla galleria</string>
+    <string name="title_activity_scelta_immagine">SceltaImmagine</string>
+    <string name="hello_world">Hello world!</string>
+
+    <!-- Home.java -->
+    <string name="home_loading">Accesso in corso...</string>
+
+    <!-- SceltaImmagine.java -->
+    <string name="scelta_immmagine_chooser_title">Scegli un\'immagine</string>
+
+    <!-- PhotosActivity.java -->
+    <string name="photos_activity_upload_completato">Upload dell\'immagine completato</string>
 
 </resources>
