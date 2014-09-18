@@ -6,7 +6,7 @@ public class VariabiliGlobali extends Application {
     private String id;
     private final static String baseServerUrl = "http://esamiuniud.altervista.org/";
     private final static String homeServerUrl = "encimg";
-    private final static String passwordServerUrl = "pass-dimenticata.php";
+    private final static String passwordServerUrl = "dim-pass.php";
     private final static String uploadServerUrl = "inserita-foto.php";
 
     public String getId() {
